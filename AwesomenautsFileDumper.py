@@ -7,6 +7,7 @@ from animolite import decrypt, unbind, createandwrite
 
 
 def dump(gamedir='.'):
+    running_dir = os.getcwd()
     os.chdir(gamedir)
     datafiles = glob.glob('data/**', recursive=True)
 
@@ -18,7 +19,7 @@ def dump(gamedir='.'):
             decrypt_path = filepath.lower()
             data_out = decrypt(data_in, decrypt_path)
 
-            outfilepath = os.path.join(gamedir, '_decrypted', filepath.lstrip("data" + os.path.sep))
+            outfilepath = os.path.join(running_dir, '_decrypted', filepath.lstrip("data" + os.path.sep))
             if filepath.endswith("binded"):
                 binded_dir = re.sub('\d+\.binded$', '.binded', outfilepath)
                 for bindedfile in unbind(data_out):
