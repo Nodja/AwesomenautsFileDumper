@@ -5,11 +5,12 @@ This command line utility will decrypt files from the game Awesomenauts.
 
 ## Usage
 
-Copy the executable to the game's directory and run it without arguments, alternatively you can pass the game's directory as the first argument.
+1. Download the latest release version from [here](https://github.com/Nodja/AwesomenautsFileDumper/releases).
+2. Copy the executable to the game's directory and run it without arguments, alternatively you can pass the game's directory as the first argument.
 
-Example: ```AwesomenautsFileDumper.exe "C:\Program Files (x86)\Steam\steamapps\common\Awesomenauts"```
+   Example: ```AwesomenautsFileDumper.exe "C:\Program Files (x86)\Steam\steamapps\common\Awesomenauts"```
 
-The decrypted files will be placed in a folder called _decrypted under the current directory.
+   The decrypted files will be placed in a folder called _decrypted under the current directory.
 
 ## Development
 
