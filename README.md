@@ -33,5 +33,5 @@ The code should now run.
 
 ### Creating a single exe.
 
-If you want to create a single exe file to distribute your fixes, etc. use pyinstaller. I'm just placing this section here for future reference :)
+If you want to create a single exe file to distribute your fixes, etc. use pyinstaller and run the following command. I'm just placing this section here for future reference :)
 ```pyinstaller -onefile --hidden-import=_cffi_backend AwesomenautsFileDumper.py```
