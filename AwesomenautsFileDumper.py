@@ -3,7 +3,8 @@ import os
 import sys
 import re
 from settings import nodecrypt
-from animolite import decrypt, unbind, createandwrite
+from animolite.filetools import decrypt, createandwrite
+from animolite.binded import unbind
 
 
 def dump(gamedir='.'):
