@@ -1,4 +1,6 @@
-# file "example_build.py"
+"""
+I'm not an experienced C programmer, apologies for the code quality bellow. Pull requests accepted. :)
+"""
 
 from cffi import FFI
 ffi = FFI()
