@@ -54,8 +54,8 @@ def generate_key_iv(filepath, size):
     2. Do a SHA-1 hash on the filepath.
 
     3. The first 4 bytes of this hash and the size in bytes of the file is then used on a algorithm that seems to be
-       some sort of PRNG. There was more instructions reversed in the actual algorithm, but they didn't seem to do
-       anything.
+       some sort of PRNG. There was more instructions reversed in the actual algorithm, but they didn't seem to affect
+       output.
 
     """
 
@@ -88,12 +88,14 @@ def generate_key_iv(filepath, size):
 
     return key, iv
 
+
 def xor_arrays(arr1, arr2):
     """ Does a XOR on 2 arrays, very slow"""
     retarr = array('B')
     for i in range(len(arr1)):
         retarr.append(arr1[i] ^ arr2[i])
     return retarr
+
 
 def fast_xor(arr1, arr2):
     """ Fast XOR on 2 arrays, uses cffi (native C code)
@@ -102,6 +104,7 @@ def fast_xor(arr1, arr2):
     ptr_block = ffi.from_buffer(arr1)
     ptr_ctext = ffi.from_buffer(arr2)
     lib.fast_xor(ptr_block, ptr_ctext)
+
 
 def expand_key(key):
     """
@@ -116,6 +119,7 @@ def expand_key(key):
     This one fooled me for quite a while. But it's basically using the aeskeygenassist x86 instruction to generate
     round keys in a non-standard way as far as I can tell. (I'm not a crypto expert :P)
     """
+
     def aeskeygenassist_short(key):
         return array('B', [SBOX[key[1]], SBOX[key[2]], SBOX[key[3]], SBOX[key[0]]])
 
@@ -129,7 +133,7 @@ def expand_key(key):
             res1 = xor_arrays(rk1, aeskeygenassist_short(rk4))
             res2 = xor_arrays(res1, array('B', [RCON[rcon], 0, 0, 0]))
 
-        else: # elif mode == 2:
+        else:  # elif mode == 2:
             res1 = xor_arrays(aeskeygenassist_short(rk4), array('B', [RCON[rcon], 0, 0, 0]))
             res2 = xor_arrays(res1, rk1)
 
@@ -148,12 +152,14 @@ def expand_key(key):
 
     return roundkeys
 
+
 def encrypt_block(block, roundkeys):
     """ Does the whole AES 11 rounds on one block, can probably be made faster if we pass a pointer to roundkeys instead
         of the list itself.
     """
     ptr = ffi.from_buffer(block)
     lib.encrypt(ptr, ptr, roundkeys)
+
 
 def encrypt_data(plaintext, filepath):
     """
@@ -163,7 +169,7 @@ def encrypt_data(plaintext, filepath):
     filesize = len(plaintext)
 
     key, iv = generate_key_iv(filepath, filesize)
-    roundkeys =  expand_key(key)
+    roundkeys = expand_key(key)
 
     ptext = array('B', plaintext)
     ctext = array('B')
@@ -175,13 +181,14 @@ def encrypt_data(plaintext, filepath):
         ctext += block
     return ctext.tobytes()
 
+
 def decrypt_data(ciphertext, filepath):
     """Decrypt data in CFB mode"""
 
     filesize = len(ciphertext)
 
     key, iv = generate_key_iv(filepath, filesize)
-    roundkeys =  expand_key(key)
+    roundkeys = expand_key(key)
 
     ctext = array('B', ciphertext)
     plaintext = array('B')
