@@ -1,3 +1,5 @@
 .idea/
 animolite/crypto/Release/
 *.pyd
+*.pyc
+_decrypted/
