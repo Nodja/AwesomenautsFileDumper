@@ -3,3 +3,5 @@ animolite/crypto/Release/
 *.pyd
 *.pyc
 _decrypted/
+build/
+AwesomenautsFileDumper.spec
