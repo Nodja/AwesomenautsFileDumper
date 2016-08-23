@@ -2,9 +2,10 @@ from .awesomefuncs import *
 from .general import *
 
 if has_accel():
-    from .hwfunc import inplace_xor, encrypt_block
+    from .hwfunc import encrypt_block
 else:
-    print("Your cpu does not support AES acceleration, gg.")
+    from .swfunc import encrypt_block
+
 
 def encrypt_data(plaintext, filepath):
     """

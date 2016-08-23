@@ -1,6 +1,5 @@
 import hashlib
 import struct
-from array import array
 
 from .general import *
 from .swfunc import xor_arrays

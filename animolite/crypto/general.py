@@ -1,4 +1,37 @@
 import pycpuid
+from array import array
+from ._aesenc import ffi, lib
+
+
+def inplace_xor(arr1, arr2):
+    """ Fast XOR on 2 arrays, uses cffi (native C code)
+    Make sure arrays are 16 bytes long or you will have problems.
+    """
+    ptr_block = ffi.from_buffer(arr1)
+    ptr_ctext = ffi.from_buffer(arr2)
+    lib.fast_xor(ptr_block, ptr_ctext)
+
+
+def has_accel():
+    return 'AES' in pycpuid.features()
+
+
+def galois_multiply(a, b):
+    """Galois Field multiplicaiton for AES"""
+    p = 0
+    while b:
+        if b & 1:
+            p ^= a
+        a <<= 1
+        if a & 0x100:
+            a ^= 0x1b
+        b >>= 1
+
+    return p & 0xff
+
+
+gf_mul_by_2 = array('B', [galois_multiply(x, 2) for x in range(256)])
+gf_mul_by_3 = array('B', [galois_multiply(x, 3) for x in range(256)])
 
 SBOX = bytearray.fromhex('637c777bf26b6fc53001672bfed7ab76'
                          'ca82c97dfa5947f0add4a2af9ca472c0'
@@ -33,7 +66,3 @@ RCON = bytearray.fromhex('8d01020408102040801b366cd8ab4d9a'
                          '08102040801b366cd8ab4d9a2f5ebc63'
                          'c697356ad4b37dfaefc5913972e4d3bd'
                          '61c29f254a943366cc831d3a74e8cb')
-
-
-def has_accel():
-    return 'AES' in pycpuid.features()
