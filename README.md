@@ -1,7 +1,7 @@
 # Awesomenauts File Dumper
 This command line utility will decrypt files from the game Awesomenauts.
 
-**Requires a CPU with the AES-NI instruction set.** CPU-Z should list AES under instructions, like [this](http://i.imgur.com/u58AeOJ.png)
+**This will be very slow if your CPU does not have the AES-NI instruction set.** CPU-Z should list AES under instructions, like [this](http://i.imgur.com/u58AeOJ.png)
 
 ## Usage
 
