@@ -21,13 +21,14 @@ These instruction are for specific for windows.
 
 1. Install Visual Studio 2015 express. 
 2. Install cffi ```pip install cffi```
-3. Build the _aesenc by running the aesenc.build.py script. Open a command line in the project folder and then:
+3. Install pycpuid ```pip install git+https://github.com/Rupan/PyCPUID.git```
+4. Build the _aesenc by running the aesenc.build.py script. Open a command line in the project folder and then:
 
    ```
-   cd animolite
+   cd animolite\crypto
    python aesenc.build.py
    ```
-   this will create a _aesenc.<platform>.pyd file in the animolite directory.
+   this will create a _aesenc.<platform>.pyd file in the directory.
 
 The code should now run.
 
