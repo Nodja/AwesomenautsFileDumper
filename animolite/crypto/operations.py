@@ -25,6 +25,10 @@ def encrypt_data(plaintext, filepath):
         encrypt_block(block, roundkeys)
         inplace_xor(block, ptext[offset:offset + 16])
         ctext += block
+     
+    tail = len(ptext) % 16
+    if tail > 0:
+        ctext = ctext[:tail - 16]
     return ctext.tobytes()
 
 
